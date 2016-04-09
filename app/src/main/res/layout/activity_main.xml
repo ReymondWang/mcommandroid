@@ -10,4 +10,11 @@
         android:layout_alignParentBottom="true">
     </com.purplelight.mcommunity.component.widget.TabGroup>
 
+    <com.purplelight.mcommunity.component.widget.ToggleViewPager
+        android:id="@+id/mPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tabGroup">
+    </com.purplelight.mcommunity.component.widget.ToggleViewPager>
+
 </RelativeLayout>

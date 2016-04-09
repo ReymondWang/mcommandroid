@@ -1,6 +1,7 @@
 <resources>
     <!-- 公共部分 -->
-    <dimen name="common_spacing_exsmall">1dip</dimen>
+    <dimen name="top_status_bar_height">25dip</dimen>
+    <dimen name="common_spacing_xsmall">1dip</dimen>
     <dimen name="common_spacing_small">2dip</dimen>
     <dimen name="common_spacing_middle">5dip</dimen>
     <dimen name="common_spacing_big">10dip</dimen>
@@ -8,7 +9,8 @@
     <dimen name="common_spacing_large">20dip</dimen>
     <dimen name="common_spacing_xlarge">30dip</dimen>
     <dimen name="common_spacing_xxlarge">40dip</dimen>
-    <dimen name="common_font_exsmall">8sp</dimen>
+    <dimen name="common_font_xxmall">8sp</dimen>
+    <dimen name="common_font_xmall">10sp</dimen>
     <dimen name="common_font_small">12sp</dimen>
     <dimen name="common_font_middle">15sp</dimen>
     <dimen name="common_font_big">18sp</dimen>
@@ -19,12 +21,12 @@
     <dimen name="common_line_height">1dip</dimen>
 
     <!-- UI -->
-    <dimen name="ui_common_input_height">40dip</dimen>
+    <dimen name="ui_common_input_height">50dip</dimen>
     <dimen name="ui_bottom_bar_padding">7dip</dimen>
     <dimen name="ui_bottom_bar_height">50dip</dimen>
-    <dimen name="ui_title_bar_height">40dip</dimen>
-    <dimen name="ui_title_bar_tab_height">35dip</dimen>
-    <dimen name="ui_title_bar_button_width">50dip</dimen>
+    <dimen name="ui_head_bar_height">40dip</dimen>
+    <dimen name="ui_head_bar_tab_height">35dip</dimen>
+    <dimen name="ui_head_bar_button_width">50dip</dimen>
     <dimen name="ui_adv_height">180dip</dimen>
     <dimen name="ui_home_cate_height">120dip</dimen>
     <dimen name="ui_home_subcate_height">60dip</dimen>

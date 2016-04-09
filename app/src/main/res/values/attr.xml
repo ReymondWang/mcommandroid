@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PurpleLight">
+        <attr name="centerTitle" format="string" />
+        <attr name="centerImage" format="reference" />
+        <attr name="leftButtonIcon" format="reference" />
+        <attr name="rightButtonIcon" format="reference" />
+    </declare-styleable>
+</resources>
