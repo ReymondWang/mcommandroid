@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#3485D8</color>
+    <color name="light_blue">#5CACEE</color>
+    <color name="dark_blue">#0D497B</color>
+    <color name="gray">#DFDFDF</color>
+    <color name="dark_gray">#929292</color>
+    <color name="dark_gray_alpha">#21292B00</color>
+    <color name="x_dark_gray">#6C6F79</color>
+    <color name="button_gray">#8E8C8C</color>
+    <color name="button_pressed_gray">#444243</color>
+    <color name="champagne">#EEE685</color>
+    <color name="light_gray">#EBEBEB</color>
+    <color name="background">#EEEEEE</color>
+    <color name="white">#FFFFFF</color>
+    <color name="green">#77A14B</color>
+    <color name="dark_green">#547335</color>
+    <color name="black">#000000</color>
+    <color name="red">#FA5654</color>
+    <color name="dark_red">#BE0505</color>
+    <color name="logout_red">#E71F19</color>
+    <color name="orange">#E87717</color>
+    <color name="light_orange">#F39F57</color>
+    <color name="light_green">#79CF76</color>
+    <color name="red_circle">#ffee693c</color>
+</resources>

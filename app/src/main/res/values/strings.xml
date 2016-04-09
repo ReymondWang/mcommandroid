@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">掌上园区</string>
+
+    <string name="tab_community">园区</string>
+    <string name="tab_work">办公</string>
+    <string name="tab_contact">联系</string>
+    <string name="tab_profile">我的</string>
+
+    <!-- 通用的消息 -->
+    <string name="common_image_description">这是一张图片</string>
+</resources>

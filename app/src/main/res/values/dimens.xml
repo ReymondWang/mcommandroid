@@ -1,0 +1,59 @@
+<resources>
+    <!-- 公共部分 -->
+    <dimen name="common_spacing_exsmall">1dip</dimen>
+    <dimen name="common_spacing_small">2dip</dimen>
+    <dimen name="common_spacing_middle">5dip</dimen>
+    <dimen name="common_spacing_big">10dip</dimen>
+    <dimen name="common_spacing_xbig">15dip</dimen>
+    <dimen name="common_spacing_large">20dip</dimen>
+    <dimen name="common_spacing_xlarge">30dip</dimen>
+    <dimen name="common_spacing_xxlarge">40dip</dimen>
+    <dimen name="common_font_exsmall">8sp</dimen>
+    <dimen name="common_font_small">12sp</dimen>
+    <dimen name="common_font_middle">15sp</dimen>
+    <dimen name="common_font_big">18sp</dimen>
+    <dimen name="common_font_xbig">21sp</dimen>
+    <dimen name="common_font_xxbig">24sp</dimen>
+    <dimen name="common_font_xxxbig">27sp</dimen>
+    <dimen name="common_little_point_size">10dip</dimen>
+    <dimen name="common_line_height">1dip</dimen>
+
+    <!-- UI -->
+    <dimen name="ui_common_input_height">40dip</dimen>
+    <dimen name="ui_bottom_bar_padding">7dip</dimen>
+    <dimen name="ui_bottom_bar_height">50dip</dimen>
+    <dimen name="ui_title_bar_height">40dip</dimen>
+    <dimen name="ui_title_bar_tab_height">35dip</dimen>
+    <dimen name="ui_title_bar_button_width">50dip</dimen>
+    <dimen name="ui_adv_height">180dip</dimen>
+    <dimen name="ui_home_cate_height">120dip</dimen>
+    <dimen name="ui_home_subcate_height">60dip</dimen>
+    <dimen name="ui_home_list_item_height">140dip</dimen>
+    <dimen name="ui_category_icon_size">50dip</dimen>
+    <dimen name="ui_row_arrow_size">20dip</dimen>
+    <dimen name="ui_tab_arrow_size">20dip</dimen>
+    <dimen name="ui_item_btn_size">30dip</dimen>
+    <dimen name="ui_item_btn_big_size">40dip</dimen>
+    <dimen name="ui_item_img_size_exbig">110dip</dimen>
+    <dimen name="ui_item_img_size_big">90dip</dimen>
+    <dimen name="ui_item_img_size_middle">70dip</dimen>
+    <dimen name="ui_item_img_size_small">50dip</dimen>
+    <dimen name="ui_item_img_size_xsmall">40dip</dimen>
+    <dimen name="ui_table_title_row_height">35dip</dimen>
+    <dimen name="ui_user_head_size">74dip</dimen>
+    <dimen name="ui_user_head_background_height">120dip</dimen>
+    <dimen name="ui_top_setting_height">157dip</dimen>
+    <dimen name="ui_user_name_left_margin">114dip</dimen>
+    <dimen name="ui_table_row_height_big">50dip</dimen>
+    <dimen name="ui_table_row_height_middle">45dip</dimen>
+    <dimen name="ui_table_row_height_small">40dip</dimen>
+    <dimen name="ui_table_row_height_xsmall">20dip</dimen>
+    <dimen name="ui_table_icon_size">25dip</dimen>
+    <dimen name="ui_popup_window_width">250dip</dimen>
+    <dimen name="ui_dialog_button_height">40dip</dimen>
+    <dimen name="ui_related_grid_height">200dip</dimen>
+    <dimen name="ui_related_grid_title_height">50dip</dimen>
+
+    <!-- 产品详细信息 -->
+    <dimen name="commodity_info_img_height">220dip</dimen>
+</resources>
