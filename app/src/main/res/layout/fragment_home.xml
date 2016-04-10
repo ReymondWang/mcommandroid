@@ -10,10 +10,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_status_bar_height"
-        app:leftButtonIcon="@drawable/ic_location"
-        app:rightButtonIcon="@drawable/ic_topbar_more"
         app:centerImage="@drawable/ic_ccp_logo"
         app:centerTitle="@string/title_community_name">
     </com.purplelight.mcommunity.component.widget.HeadBar>
+
+    <com.purplelight.mcommunity.component.view.ToggleSwipeLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.purplelight.mcommunity.component.widget.AutoScrollViewPager
+                    android:id="@+id/vpHomeTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ui_adv_height">
+                </com.purplelight.mcommunity.component.widget.AutoScrollViewPager>
+
+                <com.purplelight.mcommunity.component.widget.CirclePageIndicator
+                    android:id="@+id/homeTopIndicator"
+                    android:layout_gravity="center|bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/common_spacing_middle"
+                    android:layout_marginBottom="@dimen/common_spacing_big"
+                    app:fillColor="@color/white"/>
+
+            </FrameLayout>
+
+        </ScrollView>
+
+    </com.purplelight.mcommunity.component.view.ToggleSwipeLayout>
 
 </LinearLayout>

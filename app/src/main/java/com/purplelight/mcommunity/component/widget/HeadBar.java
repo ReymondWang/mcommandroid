@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -94,11 +95,14 @@ public class HeadBar extends RelativeLayout {
             btnRightHeadButton.setVisibility(View.GONE);
         }
 
+        // 当显示顶部工具栏中央显示图标的时候字体变小，否则使用大字体。
         if (centerImage != null){
             imgHeadCenter.setVisibility(View.VISIBLE);
             imgHeadCenter.setImageDrawable(centerImage);
+            txtHeadCenter.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_font_xmall));
         } else {
             imgHeadCenter.setVisibility(View.GONE);
+            txtHeadCenter.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.common_font_xbig));
         }
 
         txtHeadCenter.setText(centerTitle);

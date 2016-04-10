@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +13,8 @@ import android.view.WindowManager;
 import com.purplelight.mcommunity.component.widget.TabGroup;
 import com.purplelight.mcommunity.component.widget.ToggleViewPager;
 import com.purplelight.mcommunity.fragment.HomeFragment;
+import com.purplelight.mcommunity.fragment.ProfileFragment;
+import com.purplelight.mcommunity.fragment.WorkFragment;
 import com.purplelight.mcommunity.util.SystemBarTintManager;
 
 import butterknife.ButterKnife;
@@ -25,7 +26,7 @@ import butterknife.InjectView;
  */
 public class MainActivity extends FragmentActivity {
 
-    private final static int PAGE_COUNT = 4;
+    private final static int PAGE_COUNT = 3;
 
     @InjectView(R.id.tabGroup) TabGroup mTabGroup;
     @InjectView(R.id.mPager) ToggleViewPager mPager;
@@ -89,7 +90,16 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return HomeFragment.Create(position);
+            switch (position){
+                case 0:
+                    return HomeFragment.Create();
+                case 1:
+                    return WorkFragment.Create();
+                case 2:
+                    return ProfileFragment.Create();
+                default:
+                    return null;
+            }
         }
 
         @Override

@@ -1,13 +1,24 @@
 <resources>
     <string name="app_name">掌上园区</string>
 
-    <string name="tab_community">园区</string>
+    <!-- 底部导航 -->
+    <string name="tab_community">首页</string>
     <string name="tab_work">办公</string>
     <string name="tab_contact">联系</string>
     <string name="tab_profile">我的</string>
 
+    <!-- 首页 -->
     <string name="title_community_name">金桥园区</string>
+
+    <!-- 办公 -->
+    <string name="title_work_name">办公</string>
+
+    <!-- 联系 -->
+    <string name="title_contact_name">联系</string>
+
+    <!-- 我的 -->
 
     <!-- 通用的消息 -->
     <string name="common_image_description">这是一张图片</string>
+    <string name="no_server_info">没有设定服务器信息</string>
 </resources>

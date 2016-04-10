@@ -23,7 +23,6 @@ public class TabGroup extends LinearLayout {
 
     @InjectView(R.id.community) LinearLayout mCommunity;
     @InjectView(R.id.work) ViewGroup mWork;
-    @InjectView(R.id.contact) LinearLayout mContact;
     @InjectView(R.id.profile) LinearLayout mProfile;
     @InjectView(R.id.count) TextView mCount;
 
@@ -32,12 +31,10 @@ public class TabGroup extends LinearLayout {
     {
         imageRes = new int[] {R.drawable.ic_community_normal
                 , R.drawable.ic_work_normal
-                , R.drawable.ic_contact_normal
                 , R.drawable.ic_profile_normal};
 
         imageResActive = new int[] {R.drawable.ic_community_select
                 , R.drawable.ic_work_select
-                , R.drawable.ic_contact_select
                 , R.drawable.ic_profile_select};
     }
 
@@ -57,7 +54,7 @@ public class TabGroup extends LinearLayout {
 
         mLabelColor = getResources().getColor(R.color.dark_gray);
         mLabelColorSelected = getResources().getColor(R.color.color_primary);
-        mItems = new ViewGroup[] {mCommunity, mWork, mContact, mProfile};
+        mItems = new ViewGroup[] {mCommunity, mWork, mProfile};
 
         setBackgroundResource(R.drawable.bottom_bar);
         updateSelected(0);
