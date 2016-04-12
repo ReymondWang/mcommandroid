@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +31,10 @@ public class WebBannerView extends LinearLayout implements View.OnClickListener 
     private WebBanner mBanner;
     private OnBannerClickListener mBannerClickListener;
 
+    private int mImgHeight, mImgWidth;
+
+    private boolean hasSetStyle = false;     // 是否已经设定过样式
+
     public WebBannerView(Context context) {
         this(context, null);
     }
@@ -48,12 +53,55 @@ public class WebBannerView extends LinearLayout implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        mBannerClickListener.onBannerClick(mBanner);
+        if (mBannerClickListener != null){
+            mBannerClickListener.onBannerClick(mBanner);
+        }
     }
 
     public void setOnBannerClickEvent(OnBannerClickListener bannerClickListener){
+        mBannerClickListener = bannerClickListener;
         if (mBannerClickListener != null){
-            mBannerClickListener = bannerClickListener;
+            setOnClickListener(this);
+            imgBanner.setOnClickListener(this);
+        }
+    }
+
+    public void setImgScaleStyle(ImageView.ScaleType type){
+        imgBanner.setScaleType(type);
+    }
+
+    public void setImgClickable(boolean clickable){
+        imgBanner.setClickable(clickable);
+    }
+
+    public ImageView getImgBanner(){
+        return imgBanner;
+    }
+
+    public void setImgHeight(int height){
+        mImgHeight = height;
+    }
+
+    public void setImgWidth(int width){
+        imgBanner.setMaxWidth(width);
+        mImgWidth = width;
+    }
+
+    /**
+     * 将setImgHeight和setImgWidth设定的高度最终设定到imgBanner上。
+     */
+    public void changeImgStyle(){
+        if (mImgHeight != 0 || mImgWidth != 0){
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            if (mImgHeight != 0){
+                params.height = mImgHeight;
+            }
+            if (mImgWidth != 0){
+                params.width = mImgWidth;
+            }
+            imgBanner.setLayoutParams(params);
+
+            hasSetStyle = true;
         }
     }
 
@@ -62,6 +110,11 @@ public class WebBannerView extends LinearLayout implements View.OnClickListener 
     }
 
     private void initView(){
+        // 如果没有手动设定过样式，则在绑定数据源的是否自动设定样式。
+        if (!hasSetStyle){
+            changeImgStyle();
+        }
+
         if (mBanner != null){
             if (!Validation.IsNullOrEmpty(mBanner.getImage())){
                 BitmapDownloaderTask task = new BitmapDownloaderTask(imgBanner);
@@ -71,11 +124,12 @@ public class WebBannerView extends LinearLayout implements View.OnClickListener 
             }
 
             if (!Validation.IsNullOrEmpty(mBanner.getLabel())){
+                txtBanner.setVisibility(View.VISIBLE);
                 txtBanner.setText(mBanner.getLabel());
+            } else {
+                txtBanner.setVisibility(View.GONE);
             }
-
-            imgBanner.setOnClickListener(this);
-            setOnClickListener(this);
         }
     }
+
 }

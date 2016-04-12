@@ -36,7 +36,7 @@ public class SimpleDiskLruCache {
 	private int cacheByteSize = 0;
 	private final int maxCacheItemSize = 8192; // 8192 item default
 	private long maxCacheByteSize = 1024 * 1024 * 16; // 16MB default
-	private CompressFormat mCompressFormat = CompressFormat.JPEG;
+	private CompressFormat mCompressFormat = CompressFormat.PNG;
 	private int mCompressQuality = 70;
 	
 	private final Map<String, String> mLinkedHashMap =
@@ -107,8 +107,6 @@ public class SimpleDiskLruCache {
 
 						flushCache();
 					}
-				} catch (final FileNotFoundException e) {
-					Log.e(TAG, "Error in put: " + e.getMessage());
 				} catch (final IOException e) {
 					Log.e(TAG, "Error in put: " + e.getMessage());
 				}
@@ -322,7 +320,7 @@ public class SimpleDiskLruCache {
 	 * @return
 	 */
 	private boolean writeBitmapToFile(Bitmap bitmap, String file)
-			throws IOException, FileNotFoundException {
+			throws IOException {
 		if(bitmap == null)
 			return false;
 		OutputStream out = null;

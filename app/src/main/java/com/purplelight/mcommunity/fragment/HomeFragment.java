@@ -6,21 +6,21 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.purplelight.mcommunity.R;
+import com.purplelight.mcommunity.component.view.HomeFuncRowView;
 import com.purplelight.mcommunity.component.view.ToggleSwipeLayout;
 import com.purplelight.mcommunity.component.view.WebBannerView;
 import com.purplelight.mcommunity.component.widget.AutoScrollViewPager;
 import com.purplelight.mcommunity.component.widget.CirclePageIndicator;
-import com.purplelight.mcommunity.component.widget.PageIndicator;
 import com.purplelight.mcommunity.entity.WebBanner;
 
 import java.util.ArrayList;
@@ -36,11 +36,20 @@ import butterknife.InjectView;
  */
 public class HomeFragment extends Fragment {
 
+    private final static int FUNC_NUM_EACH_ROW = 4;   // 每行显示的功能个数
+    private final static int TOP_ADV_SWIPE_SPEED = 4; // 顶部广告栏的动画间隔
+    private final static int NOTICE_NUM_EACH_ROW = 2; // 每行显示的通知个数
+
     @InjectView(R.id.swipeRefreshLayout) ToggleSwipeLayout swipeRefreshLayout;
     @InjectView(R.id.vpHomeTop) AutoScrollViewPager vpHomeTop;
     @InjectView(R.id.homeTopIndicator) CirclePageIndicator homeTopIndicator;
+    @InjectView(R.id.lytFuncContent) LinearLayout lytFuncContent;
+    @InjectView(R.id.lytNoticeContent) GridLayout lytNoticeContent;
 
     private List<WebBannerView> mBannerViews;
+    private List<WebBanner> mBanners, mFunctions, mNotices;
+
+    private Point mScreenSize = new Point();
 
     public static HomeFragment Create(){
         return new HomeFragment();
@@ -54,13 +63,12 @@ public class HomeFragment extends Fragment {
         ButterKnife.inject(this, rootView);
 
         // 取得手机屏幕的宽度，并将顶部轮播广告位的比例设置为2:1
-        Point outSize = new Point();
         WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getSize(outSize);
+        wm.getDefaultDisplay().getSize(mScreenSize);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT
                 , FrameLayout.LayoutParams.MATCH_PARENT);
-        params.height = outSize.x / 2;
+        params.height = mScreenSize.x / 2;
         vpHomeTop.setLayoutParams(params);
         vpHomeTop.setCycle(true);
 
@@ -68,6 +76,80 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout.setHeight(params.height);
 
         test();
+        initTopAdvView();
+        initFuncView();
+        initNoticeView();
+
+        return rootView;
+    }
+
+
+    /**
+     * 测试数据
+     */
+    private void test(){
+
+        String[] images = new String[]{
+                "http://picyun.90sheji.com/design/00/02/16/65/s_1024_54eee87bbe660.jpg",
+                "http://c.hiphotos.bdimg.com/album/whcrop%3D657%2C282%3Bq%3D90/sign=f7b9153773f082022dc7c77d248bc6db/e824b899a9014c0834f4d9b10a7b02087af4f4d3.jpg",
+                "http://picyun.90sheji.com/design/00/07/81/58/s_1024_552725395ecc7.jpg",
+                "http://img.ui.cn/data/file/1/9/9/136991.jpg"
+        };
+
+        mBanners = new ArrayList<>();
+        for(String img : images){
+            WebBanner banner = new WebBanner();
+            banner.setImage(img);
+            banner.setUrl("http://hanyu.iciba.com/wiki/26565.shtml");
+
+            mBanners.add(banner);
+        }
+
+        String[] funcImgs = new String[]{
+                "http://www.yooyoo360.com/photo/2009-1-1/20090112114253792.jpg",
+                "http://www.yooyoo360.com/photo/2009-1-1/20090112112311190.jpg",
+                "http://www.iconpng.com/png/beautiful_flat_one/power.png",
+                "http://www.yooyoo360.com/photo/2009-1-1/20090112111251531.jpg"
+        };
+        String[] funcLbls = new String[]{"图标一", "图标二", "图标三", "图标四"};
+
+        mFunctions = new ArrayList<>();
+        for (int i = 0; i < 4; i++){
+            WebBanner banner = new WebBanner();
+            banner.setImage(funcImgs[i]);
+            banner.setLabel(funcLbls[i]);
+
+            mFunctions.add(banner);
+        }
+
+        String[] noticeImgs = new String[]{
+                "http://pic54.nipic.com/file/20141128/17062090_115021324621_2.jpg",
+                "http://a2.att.hudong.com/50/64/21300541930997136453649062547.jpg",
+                "http://zb1.img.680.com/Task/2012-3/1/2186424_20123173445.jpg",
+                "http://m2.quanjing.com/2m/wavebreak009/wavebreak173954.jpg",
+                "http://e.hiphotos.baidu.com/zhidao/pic/item/0823dd54564e9258c5d33c2b9d82d158cdbf4e0b.jpg",
+                "http://e.hiphotos.baidu.com/zhidao/pic/item/4034970a304e251f31adc265a786c9177e3e53d0.jpg"
+        };
+
+        mNotices = new ArrayList<>();
+        for(String img : noticeImgs){
+            WebBanner banner = new WebBanner();
+            banner.setImage(img);
+
+            mNotices.add(banner);
+        }
+    }
+
+    /**
+     * 初始化顶部滚动广告栏
+     */
+    private void initTopAdvView(){
+        mBannerViews = new ArrayList<>();
+        for(WebBanner item : AutoScrollViewPager.GetCircleModePagerSource(mBanners)){
+            WebBannerView bannerView = new WebBannerView(getContext());
+            bannerView.setBanner(item);
+            mBannerViews.add(bannerView);
+        }
 
         BannerAdapter adapter = new BannerAdapter();
         vpHomeTop.setAdapter(adapter);
@@ -78,43 +160,124 @@ public class HomeFragment extends Fragment {
         vpHomeTop.setCurrentItem(1);
 
         // 设定手动切换的速度
-        vpHomeTop.setSwipeScrollDurationFactor(4);
+        vpHomeTop.setSwipeScrollDurationFactor(TOP_ADV_SWIPE_SPEED);
         // 设定自动切换的速度
-        vpHomeTop.setAutoScrollDurationFactor(4);
+        vpHomeTop.setAutoScrollDurationFactor(TOP_ADV_SWIPE_SPEED);
         // 设定自动切换的模式为轮转模式
         vpHomeTop.setSlideBorderMode(AutoScrollViewPager.SLIDE_BORDER_MODE_CYCLE);
 
         vpHomeTop.startAutoScroll();
-
-        return rootView;
     }
 
+    /**
+     * 初始化首页功能部分，每个功能行最多放置4个功能按钮，并且在最后增加一个新的功能。
+     */
+    private void initFuncView(){
+        int row = 0;                                      // 定义当前是第几行
+        int addedFunc = 0;                                // 定义已经添加了多少功能
+        boolean needLastRow = true;                       // 定义是否需要最后一行来显示增加更多的按钮，如果是正好整除则需要新增一行，否则不需要。
+        List<WebBanner> funcRowSrc = new ArrayList<>();   // 每个功能行的数据源
+        while (addedFunc < mFunctions.size()){
+            for (int i = 0; i < FUNC_NUM_EACH_ROW; i++){
+                int curIndex = row * FUNC_NUM_EACH_ROW + i;
+                if (mFunctions.size() > curIndex){
+                    funcRowSrc.add(mFunctions.get(curIndex));
+                    addedFunc++;
+                } else {
+                    needLastRow = false;
+                }
+            }
 
-    private void test(){
+            HomeFuncRowView funcRowView = new HomeFuncRowView(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            params.height = (int)getResources().getDimension(R.dimen.ui_home_function_height);
+            funcRowView.setLayoutParams(params);
 
-        String[] images = new String[]{
-                "http://d.hiphotos.baidu.com/image/pic/item/32fa828ba61ea8d35e634fb8960a304e241f58cc.jpg",
-                "http://g.hiphotos.baidu.com/image/pic/item/d31b0ef41bd5ad6e2b0f8ff583cb39dbb6fd3c3f.jpg",
-                "http://d.hiphotos.baidu.com/image/pic/item/c2fdfc039245d688d7844ea2a6c27d1ed21b2435.jpg"
-        };
+            funcRowView.setBanners(funcRowSrc);
 
-        List<WebBanner> banners = new ArrayList<>();
-        for(String img : images){
-            WebBanner banner = new WebBanner();
-            banner.setImage(img);
-            banner.setUrl("http://hanyu.iciba.com/wiki/26565.shtml");
+            // 功能按钮点击的触发的事件
+            funcRowView.setFuncClickListener(new HomeFuncRowView.OnFuncClickListener() {
+                @Override
+                public void OnFuncClick(WebBanner banners, int index) {
+                    Toast.makeText(getContext(), index + "", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            banners.add(banner);
+            // 如果不需要增加最后一行（非整除的情况），则将增加更多的按钮加到改行的下一个空余位置。
+            if (!needLastRow){
+                // 新增更多的事件
+                funcRowView.setAddMoreClickListener(new HomeFuncRowView.OnAddMoreClickListener() {
+                    @Override
+                    public void OnAddMoreClick() {
+                        Toast.makeText(getContext(), "default", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            lytFuncContent.addView(funcRowView);
+
+            funcRowSrc = new ArrayList<>();
+            row++;
         }
 
-        mBannerViews = new ArrayList<>();
-        for(WebBanner item : AutoScrollViewPager.GetCircleModePagerSource(banners)){
+        // 如果需要增加最后一行（整除的情况），则新增一行用来显示新增更多的按钮。
+        if (needLastRow){
+            HomeFuncRowView funcRowView = new HomeFuncRowView(getContext());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            params.height = (int)getResources().getDimension(R.dimen.ui_home_function_height);
+            funcRowView.setLayoutParams(params);
+
+            funcRowView.setBanners(funcRowSrc);
+            // 新增更多的事件
+            funcRowView.setAddMoreClickListener(new HomeFuncRowView.OnAddMoreClickListener() {
+                @Override
+                public void OnAddMoreClick() {
+                    Toast.makeText(getContext(), "default", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            lytFuncContent.addView(funcRowView);
+        }
+    }
+
+    /**
+     * 初始化首页通知功能部分
+     */
+    private void initNoticeView(){
+
+        lytNoticeContent.setColumnCount(NOTICE_NUM_EACH_ROW);
+        int rowCnt = mNotices.size() / NOTICE_NUM_EACH_ROW;
+        if (mNotices.size() % NOTICE_NUM_EACH_ROW != 0){
+            rowCnt++;
+        }
+        lytNoticeContent.setRowCount(rowCnt);
+
+        int spacing = (int)getResources().getDimension(R.dimen.common_spacing_xsmall);
+        for (int i = 0; i < mNotices.size(); i++){
             WebBannerView bannerView = new WebBannerView(getContext());
-            bannerView.setBanner(item);
-            mBannerViews.add(bannerView);
+
+            GridLayout.Spec rowSpec = GridLayout.spec(i / NOTICE_NUM_EACH_ROW, 1);
+            GridLayout.Spec columnSpec = GridLayout.spec(i % NOTICE_NUM_EACH_ROW, 1);
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
+            params.width = (mScreenSize.x - spacing * (NOTICE_NUM_EACH_ROW - 1)) / NOTICE_NUM_EACH_ROW;
+            params.height = params.width / 2;
+
+            if (i % NOTICE_NUM_EACH_ROW == 0){
+                params.setMargins(0, spacing, 0, 0);
+            } else {
+                params.setMargins(spacing, spacing, 0, 0);
+            }
+            bannerView.setLayoutParams(params);
+
+            bannerView.setBanner(mNotices.get(i));
+
+            lytNoticeContent.addView(bannerView);
         }
     }
 
+    /**
+     * 顶部Banner的适配器
+     */
     private class BannerAdapter extends PagerAdapter {
 
         public int getCount() {

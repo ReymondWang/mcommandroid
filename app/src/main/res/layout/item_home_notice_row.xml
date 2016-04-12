@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.purplelight.mcommunity.component.view.WebBannerView
+        android:id="@+id/noticeOne"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0">
+    </com.purplelight.mcommunity.component.view.WebBannerView>
+    <com.purplelight.mcommunity.component.view.WebBannerView
+        android:id="@+id/noticeTwo"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0">
+    </com.purplelight.mcommunity.component.view.WebBannerView>
+
+</LinearLayout>

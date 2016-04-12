@@ -23,26 +23,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <com.purplelight.mcommunity.component.widget.AutoScrollViewPager
-                    android:id="@+id/vpHomeTop"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/ui_adv_height">
-                </com.purplelight.mcommunity.component.widget.AutoScrollViewPager>
+                    android:layout_height="wrap_content">
 
-                <com.purplelight.mcommunity.component.widget.CirclePageIndicator
-                    android:id="@+id/homeTopIndicator"
-                    android:layout_gravity="center|bottom"
-                    android:layout_width="wrap_content"
+                    <com.purplelight.mcommunity.component.widget.AutoScrollViewPager
+                        android:id="@+id/vpHomeTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ui_adv_height">
+                    </com.purplelight.mcommunity.component.widget.AutoScrollViewPager>
+
+                    <com.purplelight.mcommunity.component.widget.CirclePageIndicator
+                        android:id="@+id/homeTopIndicator"
+                        android:layout_gravity="center|bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/common_spacing_middle"
+                        android:layout_marginBottom="@dimen/common_spacing_big"
+                        app:fillColor="@color/white"/>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/lytFuncContent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/common_spacing_middle"
-                    android:layout_marginBottom="@dimen/common_spacing_big"
-                    app:fillColor="@color/white"/>
+                    android:orientation="vertical"
+                    android:background="@color/white">
+                </LinearLayout>
 
-            </FrameLayout>
+                <GridLayout
+                    android:id="@+id/lytNoticeContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </GridLayout>
+
+            </LinearLayout>
 
         </ScrollView>
 
