@@ -120,7 +120,7 @@ public class WebBannerView extends LinearLayout implements View.OnClickListener 
                 BitmapDownloaderTask task = new BitmapDownloaderTask(imgBanner);
                 DownloadedDrawable drawable = new DownloadedDrawable(task, getResources());
                 imgBanner.setImageDrawable(drawable);
-                task.execute(ImageHelper.GetImageUrl(mBanner.getImage()));
+                task.execute(mBanner.getImage());
             }
 
             if (!Validation.IsNullOrEmpty(mBanner.getLabel())){

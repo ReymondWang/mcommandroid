@@ -42,7 +42,8 @@
     <dimen name="ui_item_img_size_small">50dip</dimen>
     <dimen name="ui_item_img_size_xsmall">40dip</dimen>
     <dimen name="ui_table_title_row_height">35dip</dimen>
-    <dimen name="ui_user_head_size">74dip</dimen>
+    <dimen name="ui_user_head_row_height">70dip</dimen>
+    <dimen name="ui_user_head_size">60dip</dimen>
     <dimen name="ui_user_head_background_height">120dip</dimen>
     <dimen name="ui_top_setting_height">157dip</dimen>
     <dimen name="ui_user_name_left_margin">114dip</dimen>
@@ -55,7 +56,6 @@
     <dimen name="ui_dialog_button_height">40dip</dimen>
     <dimen name="ui_related_grid_height">200dip</dimen>
     <dimen name="ui_related_grid_title_height">50dip</dimen>
+    <dimen name="ui_common_icon_size">30dip</dimen>
 
-    <!-- 产品详细信息 -->
-    <dimen name="commodity_info_img_height">220dip</dimen>
 </resources>

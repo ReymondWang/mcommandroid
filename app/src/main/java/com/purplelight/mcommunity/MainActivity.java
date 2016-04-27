@@ -3,15 +3,13 @@ package com.purplelight.mcommunity;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.purplelight.mcommunity.component.widget.TabGroup;
-import com.purplelight.mcommunity.component.widget.ToggleViewPager;
 import com.purplelight.mcommunity.fragment.HomeFragment;
 import com.purplelight.mcommunity.fragment.ProfileFragment;
 import com.purplelight.mcommunity.fragment.WorkFragment;
@@ -26,10 +24,13 @@ import butterknife.InjectView;
  */
 public class MainActivity extends FragmentActivity {
 
-    private final static int PAGE_COUNT = 3;
-
     @InjectView(R.id.tabGroup) TabGroup mTabGroup;
-    @InjectView(R.id.mPager) ToggleViewPager mPager;
+
+    private HomeFragment homeFragment;
+    private WorkFragment workFragment;
+    private ProfileFragment profileFragment;
+
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +40,9 @@ public class MainActivity extends FragmentActivity {
 
         ButterKnife.inject(this);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.color_primary);
-        }
+        setTintBarBgColor(R.color.user_head_bg);
+
+        fragmentManager = getSupportFragmentManager();
 
         initView();
         initEvent();
@@ -65,46 +63,59 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView(){
-        mPager.setCanScroll(false);
-        mPager.setAdapter(new MainViewAdapter(getSupportFragmentManager()));
-        mPager.setCurrentItem(0);
+        homeFragment = HomeFragment.Create();
+        workFragment = WorkFragment.Create();
+        profileFragment = ProfileFragment.Create();
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.lytContent, homeFragment);
+        transaction.add(R.id.lytContent, workFragment);
+        transaction.add(R.id.lytContent, profileFragment);
+        transaction.commit();
+
+        changeTab(0);
     }
 
     private void initEvent(){
         mTabGroup.setOnTabChangeListener(new TabGroup.TabSelectListener() {
             @Override
             public boolean onTabSelected(int index) {
-                mPager.setCurrentItem(index, true);
+                changeTab(index);
                 return true;
             }
         });
     }
 
-    /**
-     * 画面主要框架的绑定适配器
-     */
-    private class MainViewAdapter extends FragmentStatePagerAdapter {
-        public MainViewAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position){
-                case 0:
-                    return HomeFragment.Create();
-                case 1:
-                    return WorkFragment.Create();
-                case 2:
-                    return ProfileFragment.Create();
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return PAGE_COUNT;
+    private void setTintBarBgColor(int color){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(color);
         }
     }
+
+    private void changeTab(int index){
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        switch (index){
+            case 0:
+                transaction.show(homeFragment);
+                transaction.hide(workFragment);
+                transaction.hide(profileFragment);
+                break;
+            case 1:
+                transaction.hide(homeFragment);
+                transaction.show(workFragment);
+                transaction.hide(profileFragment);
+                break;
+            case 2:
+                transaction.hide(homeFragment);
+                transaction.hide(workFragment);
+                transaction.show(profileFragment);
+
+                break;
+        }
+        transaction.commit();
+    }
+
 }

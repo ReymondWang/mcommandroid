@@ -2,9 +2,18 @@ package com.purplelight.mcommunity.util;
 
 import android.util.Log;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -35,6 +44,36 @@ public class HttpUtil {
             Log.e(TAG, ex.getMessage());
         }
         return "";
+    }
+
+    public static String PostJosn(String strUrl, String json) throws IOException{
+        String result = "";
+        URL url = new URL(strUrl);
+
+        HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+        urlConnection.setDoInput(true);
+        urlConnection.setDoOutput(true);
+        urlConnection.setRequestMethod("POST");
+        urlConnection.setUseCaches(false);
+        urlConnection.setRequestProperty("Content-Type", "application/json");
+        urlConnection.setRequestProperty("Charset", "utf-8");
+
+        urlConnection.connect();
+
+        DataOutputStream dataOutputStream = new DataOutputStream(urlConnection.getOutputStream());
+        dataOutputStream.writeBytes(URLEncoder.encode(json, "utf-8"));
+        dataOutputStream.flush();
+        dataOutputStream.close();
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+        String readLine;
+        while ((readLine = bufferedReader.readLine()) != null){
+            result += readLine;
+        }
+        bufferedReader.close();
+        urlConnection.disconnect();
+
+        return result;
     }
 
     private static String PostDataFromNet(String strUrl, HashMap<String, String> params) throws Exception {

@@ -1,11 +1,19 @@
 <resources>
     <string name="app_name">掌上园区</string>
 
+    <!-- 正在加载 -->
+    <string name="txt_loading">正在加载......</string>
+
     <!-- 底部导航 -->
     <string name="tab_community">首页</string>
     <string name="tab_work">办公</string>
     <string name="tab_contact">联系</string>
     <string name="tab_profile">我的</string>
+
+    <!-- 登录 -->
+    <string name="btn_login">登    录</string>
+    <string name="txt_login_id">编号/邮箱/手机</string>
+    <string name="txt_password">密码</string>
 
     <!-- 首页 -->
     <string name="title_community_name">金桥园区</string>
@@ -17,8 +25,53 @@
     <string name="title_contact_name">联系</string>
 
     <!-- 我的 -->
+    <string name="txt_user_code_title">编号：</string>
+    <string name="txt_row_message">消息通知</string>
+    <string name="txt_row_password">修改密码</string>
+    <string name="txt_row_buffer">清除缓存</string>
+    <string name="txt_row_advice">意见反馈</string>
+    <string name="txt_row_about">关于我们</string>
+    <string name="txt_logout">退出登录</string>
+
+    <!--个人信息-->
+    <string name="txt_personal_info_title">个人信息</string>
+    <string name="txt_head_img_title">头像</string>
+    <string name="txt_user_id_title">编号</string>
+    <string name="txt_user_name_title">姓名</string>
+    <string name="txt_user_sex_title">性别</string>
+    <string name="txt_user_email_title">邮箱</string>
+    <string name="txt_user_phone_title">手机</string>
+
+    <!--修改个人信息-->
+    <string name="txt_user_name_hint">请输入姓名</string>
+    <string name="txt_user_sex_hint">请选择性别</string>
+    <string name="txt_user_email_hint">请输入邮箱</string>
+    <string name="txt_user_phone_hint">请输入手机</string>
+    <string name="txt_male">男</string>
+    <string name="txt_female">女</string>
+
+    <!-- 退出确认 -->
+    <string name="title_logout_confirm">您是否确认退出？</string>
+
+    <!-- 确认对话框 -->
+    <string name="switch_on">是</string>
+    <string name="switch_off">否</string>
+
+    <!-- 选择图片方式 -->
+    <string name="user_head_img_setting">请设置头像</string>
+    <string name="user_head_img_camera">拍照</string>
+    <string name="user_head_img_photo">从相册选取</string>
+    <string name="upload_image_success">上传图片成功</string>
 
     <!-- 通用的消息 -->
     <string name="common_image_description">这是一张图片</string>
     <string name="no_server_info">没有设定服务器信息</string>
+    <string name="do_not_have_network">没有可以使用的网络</string>
+    <string name="login_failed">登录失败</string>
+    <string name="update_failed">更新失败</string>
+    <string name="login_successed">登录成功</string>
+    <string name="sex_selected_sex">请选择性别</string>
+    <string name="user_name_must_input">请输入用户名</string>
+    <string name="user_email_must_input">请输入邮箱</string>
+    <string name="user_phone_must_input">请输入电话</string>
 </resources>

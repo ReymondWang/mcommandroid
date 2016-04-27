@@ -3,7 +3,7 @@ package com.purplelight.mcommunity.task;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
-import com.purplelight.mcommunity.result.WebResult;
+import com.purplelight.mcommunity.web.result.Result;
 import com.purplelight.mcommunity.util.HttpUtil;
 
 import java.lang.ref.WeakReference;
@@ -12,19 +12,19 @@ import java.lang.ref.WeakReference;
  * AsyncTask for downloading data from url.
  * Created by wangyn on 15/7/12.
  */
-public class UrlDownloaderTask extends AsyncTask<UrlDownloaderEntity, Integer, WebResult> {
+public class UrlDownloaderTask extends AsyncTask<UrlDownloaderEntity, Integer, Result> {
 
-    private Class<? extends WebResult> resultClassName;
+    private Class<? extends Result> resultClassName;
 
     private WeakReference<UrlDownloadedCallBack> callBackWeakReference;
 
-    public UrlDownloaderTask(UrlDownloadedCallBack callBack, Class<? extends WebResult> resultClassName){
+    public UrlDownloaderTask(UrlDownloadedCallBack callBack, Class<? extends Result> resultClassName){
         callBackWeakReference = new WeakReference<>(callBack);
         this.resultClassName = resultClassName;
     }
 
-    protected WebResult doInBackground(UrlDownloaderEntity... param){
-        WebResult result = new WebResult();
+    protected Result doInBackground(UrlDownloaderEntity... param){
+        Result result = new Result();
 
         if (param != null && param.length > 0) {
             UrlDownloaderEntity entity = param[0];
@@ -32,18 +32,18 @@ public class UrlDownloaderTask extends AsyncTask<UrlDownloaderEntity, Integer, W
             Gson gson = new Gson();
             String strResult = HttpUtil.GetDataFromNet(entity.getUrl(), entity.getUrlParams(), entity.getHttpType());
             if (!"".equals(strResult)) {
-                result = gson.fromJson(strResult, WebResult.class);
-                if ("0".equals(result.getCode()) && resultClassName != WebResult.class) {
+                result = gson.fromJson(strResult, Result.class);
+                if ("0".equals(result.getSuccess()) && resultClassName != Result.class) {
                     result = gson.fromJson(strResult, resultClassName);
                 }
             } else {
-                result.setCode("-1");
+                result.setSuccess("-1");
             }
         }
         return result;
     }
 
-    protected void onPostExecute(WebResult result) {
+    protected void onPostExecute(Result result) {
         if (isCancelled()){
             return;
         }

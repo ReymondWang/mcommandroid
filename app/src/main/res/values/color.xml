@@ -18,9 +18,11 @@
     <color name="black">#000000</color>
     <color name="red">#FA5654</color>
     <color name="dark_red">#BE0505</color>
-    <color name="logout_red">#E71F19</color>
+    <color name="btn_red">#D52F62</color>
     <color name="orange">#E87717</color>
     <color name="light_orange">#F39F57</color>
     <color name="light_green">#79CF76</color>
     <color name="red_circle">#ffee693c</color>
+    <color name="login_text">#D8DBD4</color>
+    <color name="user_head_bg">#2C3042</color>
 </resources>

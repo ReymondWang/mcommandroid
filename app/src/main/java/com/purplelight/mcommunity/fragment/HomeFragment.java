@@ -3,6 +3,7 @@ package com.purplelight.mcommunity.fragment;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -17,7 +18,6 @@ import android.widget.Toast;
 
 import com.purplelight.mcommunity.R;
 import com.purplelight.mcommunity.component.view.HomeFuncRowView;
-import com.purplelight.mcommunity.component.view.ToggleSwipeLayout;
 import com.purplelight.mcommunity.component.view.WebBannerView;
 import com.purplelight.mcommunity.component.widget.AutoScrollViewPager;
 import com.purplelight.mcommunity.component.widget.CirclePageIndicator;
@@ -40,11 +40,12 @@ public class HomeFragment extends Fragment {
     private final static int TOP_ADV_SWIPE_SPEED = 4; // 顶部广告栏的动画间隔
     private final static int NOTICE_NUM_EACH_ROW = 2; // 每行显示的通知个数
 
-    @InjectView(R.id.swipeRefreshLayout) ToggleSwipeLayout swipeRefreshLayout;
     @InjectView(R.id.vpHomeTop) AutoScrollViewPager vpHomeTop;
     @InjectView(R.id.homeTopIndicator) CirclePageIndicator homeTopIndicator;
     @InjectView(R.id.lytFuncContent) LinearLayout lytFuncContent;
     @InjectView(R.id.lytNoticeContent) GridLayout lytNoticeContent;
+
+
 
     private List<WebBannerView> mBannerViews;
     private List<WebBanner> mBanners, mFunctions, mNotices;
@@ -72,17 +73,29 @@ public class HomeFragment extends Fragment {
         vpHomeTop.setLayoutParams(params);
         vpHomeTop.setCycle(true);
 
-        // 当手指滑动区域在顶部轮播广告位时，不触发刷新事件。
-        swipeRefreshLayout.setHeight(params.height);
-
-        test();
-        initTopAdvView();
-        initFuncView();
-        initNoticeView();
+        loadingDataHandler.post(loadingDataRunnable);
 
         return rootView;
     }
 
+    private final Handler loadingDataHandler = new Handler();
+    private final Runnable loadingDataRunnable = new Runnable() {
+        @Override
+        public void run() {
+            test();
+            paintingViewHandle.post(paintingViewRunnable);
+        }
+    };
+
+    private final Handler paintingViewHandle = new Handler();
+    private final Runnable paintingViewRunnable = new Runnable() {
+        @Override
+        public void run() {
+            initTopAdvView();
+            initFuncView();
+            initNoticeView();
+        }
+    };
 
     /**
      * 测试数据
@@ -173,6 +186,8 @@ public class HomeFragment extends Fragment {
      * 初始化首页功能部分，每个功能行最多放置4个功能按钮，并且在最后增加一个新的功能。
      */
     private void initFuncView(){
+        lytFuncContent.removeAllViews();
+
         int row = 0;                                      // 定义当前是第几行
         int addedFunc = 0;                                // 定义已经添加了多少功能
         boolean needLastRow = true;                       // 定义是否需要最后一行来显示增加更多的按钮，如果是正好整除则需要新增一行，否则不需要。

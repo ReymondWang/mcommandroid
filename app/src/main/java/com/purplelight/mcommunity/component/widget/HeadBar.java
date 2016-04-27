@@ -45,6 +45,10 @@ public class HeadBar extends RelativeLayout {
         void onHeadButtonClicked();
     }
 
+    public void setCenterTitle(String title){
+        txtHeadCenter.setText(title);
+    }
+
     public void setLeftHeadButtonEvent(HeadButtonClickedListener onLeftHeadButtonClickedListener){
         if (onLeftHeadButtonClickedListener != null){
             mLeftHeadButtonClickedListener = onLeftHeadButtonClickedListener;

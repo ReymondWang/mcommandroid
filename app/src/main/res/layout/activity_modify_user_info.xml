@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.purplelight.mcommunity.component.widget.HeadBar
+        android:id="@+id/headBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_status_bar_height"
+        app:leftButtonIcon="@drawable/ic_back_normal"
+        app:rightButtonIcon="@drawable/ic_done_white">
+    </com.purplelight.mcommunity.component.widget.HeadBar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_line_height"
+        android:layout_marginTop="@dimen/common_spacing_big"
+        android:background="@color/light_gray" />
+
+    <RelativeLayout
+        android:id="@+id/lytUserSex"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_table_row_height_middle"
+        android:background="@color/white"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="@dimen/common_spacing_big"
+            android:layout_marginStart="@dimen/common_spacing_big"
+            android:textSize="@dimen/common_font_middle"
+            android:text="@string/txt_user_sex_hint"/>
+
+       <RadioGroup
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:layout_alignParentRight="true"
+           android:layout_alignParentEnd="true"
+           android:layout_centerVertical="true"
+           android:gravity="center_vertical"
+           android:layout_marginRight="@dimen/common_spacing_big"
+           android:layout_marginEnd="@dimen/common_spacing_big"
+           android:orientation="horizontal">
+
+           <RadioButton
+               android:id="@+id/radMale"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/txt_male"/>
+
+           <RadioButton
+               android:id="@+id/radFemale"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="@string/txt_female"/>
+
+       </RadioGroup>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/txtModifyInfo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_table_row_height_middle"
+        android:paddingLeft="@dimen/common_spacing_big"
+        android:paddingRight="@dimen/common_spacing_big"
+        android:background="@color/white"
+        android:textSize="@dimen/common_font_middle"
+        android:inputType="text"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_line_height"
+        android:background="@color/light_gray" />
+
+    <LinearLayout
+        android:id="@+id/loginProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleLarge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_font_big"
+            android:text="@string/txt_loading"/>
+
+    </LinearLayout>
+
+</LinearLayout>

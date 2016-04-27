@@ -1,17 +1,20 @@
 package com.purplelight.mcommunity.util;
 
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.support.v4.util.LruCache;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.purplelight.mcommunity.constant.WebServiceAPI;
+import com.purplelight.mcommunity.fastdfs.ClientGlobal;
+import com.purplelight.mcommunity.fastdfs.StorageClient;
+import com.purplelight.mcommunity.fastdfs.StorageServer;
+import com.purplelight.mcommunity.fastdfs.TrackerClient;
+import com.purplelight.mcommunity.fastdfs.TrackerServer;
+import com.purplelight.mcommunity.fastdfs.UploadStream;
 import com.purplelight.mcommunity.task.BitmapDownloaderTask;
 import com.purplelight.mcommunity.task.DownloadedDrawable;
 
@@ -21,16 +24,11 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageHelper {
@@ -107,52 +105,39 @@ public class ImageHelper {
 		return null;
 	}
 
-	public static String GetImageUrl(String fileName){
-//		IServerInfoModel serverInfoModel = new ServerInfoModel();
-//		return serverInfoModel.getUrl() + "HeadImage/" + fileName + ".jpg";
-		return fileName;
-	}
-
-	public static String UploadImage(String fileName, Context context){
-		String retMsg = "";
-
-		try {
-			FileInputStream fStream = new FileInputStream(mDiskCache.getFile(GetImageUrl(fileName)));
-			int bufferSize = 100 * 1024;
-			byte[] buffer =new byte[bufferSize];
-			int count = 0;
-			int i = 0;
-			while((count = fStream.read(buffer)) >= 0){
-				String uploadBuffer=new String(Base64.encode(buffer, 0, count, Base64.DEFAULT));
-				uploadService(uploadBuffer, fileName, i, context);
-				i++;
-			}
-			fStream.close();
-
-		} catch (IOException e) {
-			retMsg = e.getMessage();
-			Log.e(TAG, e.getMessage());
+	/**
+	 * 上传图片到服务器，并返回文件名。
+	 * @param bitmap        图片
+	 * @return             fdfs的文件名
+	 * @throws Exception   异常信息
+	 */
+	public static String upload(Bitmap bitmap) throws Exception{
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, output);
+		bitmap.recycle();
+		byte[] bytes = output.toByteArray();
+		try{
+			output.close();
+		} catch (Exception ex){
+			Log.e(TAG, ex.getMessage());
 		}
 
-		return retMsg;
-	}
+		ClientGlobal.init();
 
-	private static void uploadService(String image, String fileName, int tag, Context context){
-		SoapObject request = new SoapObject(WebServiceAPI.NAMESPACE, WebServiceAPI.getMethodName(WebServiceAPI.UPLOAD_IMAGE) );
-		request.addProperty("fileName", fileName);
-		request.addProperty("image", image);
-		request.addProperty("tag", tag);
+		String fileExtName = ".png";
+		long fileLength = bytes.length;
 
-		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-		envelope.bodyOut = envelope;
-		envelope.dotNet = true;
-		envelope.setOutputSoapObject(request);
-		try {
-			HttpTransportSE ht = new HttpTransportSE(WebServiceAPI.getServiceUrl(WebServiceAPI.UPLOAD_IMAGE, context));
-			ht.call(WebServiceAPI.getFullMethodName(WebServiceAPI.UPLOAD_IMAGE), envelope);
-		} catch (Exception e) {
-			Log.e(TAG, e.getMessage());
-		}
+		TrackerClient tracker = new TrackerClient();
+		TrackerServer trackerServer = tracker.getConnection();
+		StorageServer storageServer = null;
+		StorageClient client = new StorageClient(trackerServer, storageServer);
+
+		NameValuePair[] metaList = new NameValuePair[2];
+		metaList[0] = new NameValuePair("fileExtName", fileExtName);
+		metaList[1] = new NameValuePair("fileLength", String.valueOf(fileLength));
+
+		String[] result = client.upload_file(bytes, fileExtName, metaList);
+		return result[1];
 	}
 
 	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight){

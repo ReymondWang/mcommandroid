@@ -1,14 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.purplelight.mcommunity.component.widget.HeadBar
-        android:id="@+id/headBar"
+    <RelativeLayout
+        android:id="@+id/lytUserInfo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/ui_user_head_background_height"
+        android:background="@color/user_head_bg"
         android:layout_marginTop="@dimen/top_status_bar_height">
-    </com.purplelight.mcommunity.component.widget.HeadBar>
+
+        <com.purplelight.mcommunity.component.view.CircleImageView
+            android:id="@+id/imgHeadImage"
+            android:layout_width="@dimen/ui_user_head_size"
+            android:layout_height="@dimen/ui_user_head_size"
+            android:layout_marginLeft="@dimen/common_spacing_large"
+            android:layout_marginStart="@dimen/common_spacing_large"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/default_head_image"
+            android:contentDescription="@string/common_image_description"
+            app:border_width="1dp"
+            app:border_color="@color/gray"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imgHeadImage"
+            android:layout_toEndOf="@id/imgHeadImage"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/common_spacing_big"
+            android:layout_marginStart="@dimen/common_spacing_big"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/common_font_xbig"
+                    android:textColor="@color/white"/>
+
+                <ImageView
+                    android:id="@+id/imgUserSex"
+                    android:layout_width="15dip"
+                    android:layout_height="15dip"
+                    android:src="@drawable/ic_mine_male"
+                    android:layout_marginLeft="@dimen/common_spacing_middle"
+                    android:layout_marginStart="@dimen/common_spacing_middle"
+                    android:contentDescription="@string/common_image_description"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_font_middle"
+                    android:text="@string/txt_user_code_title"/>
+
+                <TextView
+                    android:id="@+id/txtUserCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_font_middle"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/common_spacing_big"
+            android:layout_marginEnd="@dimen/common_spacing_big"
+            android:src="@drawable/ic_right_arrow_white"
+            android:contentDescription="@string/common_image_description"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_line_height"
+            android:background="@color/light_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/lytMessage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ui_table_row_height_middle"
+                android:background="@drawable/bg_clickable_row">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_spacing_large"
+                    android:layout_marginStart="@dimen/common_spacing_large"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/common_font_middle"
+                    android:text="@string/txt_row_message" />
+
+                <ImageView
+                    android:layout_width="@dimen/ui_row_arrow_size"
+                    android:layout_height="@dimen/ui_row_arrow_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/common_spacing_big"
+                    android:layout_marginRight="@dimen/common_spacing_big"
+                    android:src="@drawable/ic_right_arrow"
+                    android:contentDescription="@string/common_image_description"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_line_height"
+                android:background="@color/light_gray"
+                android:layout_marginLeft="@dimen/common_spacing_large"
+                android:layout_marginStart="@dimen/common_spacing_large" />
+
+            <RelativeLayout
+                android:id="@+id/lytPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ui_table_row_height_middle"
+                android:background="@drawable/bg_clickable_row">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_spacing_large"
+                    android:layout_marginStart="@dimen/common_spacing_large"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/common_font_middle"
+                    android:text="@string/txt_row_password" />
+
+                <ImageView
+                    android:layout_width="@dimen/ui_row_arrow_size"
+                    android:layout_height="@dimen/ui_row_arrow_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/common_spacing_big"
+                    android:layout_marginRight="@dimen/common_spacing_big"
+                    android:src="@drawable/ic_right_arrow"
+                    android:contentDescription="@string/common_image_description"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_line_height"
+                android:background="@color/light_gray"
+                android:layout_marginLeft="@dimen/common_spacing_large"
+                android:layout_marginStart="@dimen/common_spacing_large" />
+
+            <RelativeLayout
+                android:id="@+id/lytBuffer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ui_table_row_height_middle"
+                android:background="@drawable/bg_clickable_row">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_spacing_large"
+                    android:layout_marginStart="@dimen/common_spacing_large"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/common_font_middle"
+                    android:text="@string/txt_row_buffer" />
+
+                <ImageView
+                    android:layout_width="@dimen/ui_row_arrow_size"
+                    android:layout_height="@dimen/ui_row_arrow_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/common_spacing_big"
+                    android:layout_marginRight="@dimen/common_spacing_big"
+                    android:src="@drawable/ic_right_arrow"
+                    android:contentDescription="@string/common_image_description"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_line_height"
+                android:background="@color/light_gray"
+                android:layout_marginLeft="@dimen/common_spacing_large"
+                android:layout_marginStart="@dimen/common_spacing_large" />
+
+            <RelativeLayout
+                android:id="@+id/lytAdvice"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ui_table_row_height_middle"
+                android:background="@drawable/bg_clickable_row">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_spacing_large"
+                    android:layout_marginStart="@dimen/common_spacing_large"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/common_font_middle"
+                    android:text="@string/txt_row_advice" />
+
+                <ImageView
+                    android:layout_width="@dimen/ui_row_arrow_size"
+                    android:layout_height="@dimen/ui_row_arrow_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/common_spacing_big"
+                    android:layout_marginRight="@dimen/common_spacing_big"
+                    android:src="@drawable/ic_right_arrow"
+                    android:contentDescription="@string/common_image_description"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_line_height"
+                android:background="@color/light_gray"
+                android:layout_marginLeft="@dimen/common_spacing_large"
+                android:layout_marginStart="@dimen/common_spacing_large" />
+
+            <RelativeLayout
+                android:id="@+id/lytAbout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ui_table_row_height_middle"
+                android:background="@drawable/bg_clickable_row">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_spacing_large"
+                    android:layout_marginStart="@dimen/common_spacing_large"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/common_font_middle"
+                    android:text="@string/txt_row_about" />
+
+                <ImageView
+                    android:layout_width="@dimen/ui_row_arrow_size"
+                    android:layout_height="@dimen/ui_row_arrow_size"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/common_spacing_big"
+                    android:layout_marginRight="@dimen/common_spacing_big"
+                    android:src="@drawable/ic_right_arrow"
+                    android:contentDescription="@string/common_image_description"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_line_height"
+                android:background="@color/light_gray" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lytLogout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ui_table_row_height_small"
+            android:background="@drawable/bg_clickable_row"
+            android:layout_marginTop="@dimen/common_spacing_large"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_logout"
+                android:textColor="@color/orange"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </LinearLayout>

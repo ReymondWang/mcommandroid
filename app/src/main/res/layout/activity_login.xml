@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/lytLoginFrom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_login">
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_corner"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/common_spacing_large"
+            android:layout_marginRight="@dimen/common_spacing_large"
+            android:layout_marginBottom="@dimen/common_spacing_xxlarge"
+            android:text="@string/btn_login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_font_xbig"/>
+
+        <LinearLayout
+            android:id="@+id/lytPassword"
+            android:layout_above="@id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/common_spacing_large"
+            android:layout_marginRight="@dimen/common_spacing_large"
+            android:layout_marginBottom="@dimen/common_spacing_xlarge"
+            android:paddingBottom="@dimen/common_spacing_big"
+            android:gravity="bottom"
+            android:background="@drawable/ic_input_bg">
+
+            <ImageView
+                android:layout_width="@dimen/ui_common_icon_size"
+                android:layout_height="@dimen/ui_common_icon_size"
+                android:src="@drawable/ic_password"
+                android:layout_marginLeft="@dimen/common_spacing_big"
+                android:layout_marginStart="@dimen/common_spacing_big"
+                android:contentDescription="@string/common_image_description"/>
+
+            <EditText
+                android:id="@+id/txtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_spacing_big"
+                android:layout_marginStart="@dimen/common_spacing_big"
+                android:background="@null"
+                android:inputType="textPassword"
+                android:hint="@string/txt_password"
+                android:textColor="@color/login_text"
+                android:textColorHint="@color/login_text"
+                android:textSize="@dimen/common_font_xbig"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lytLoginId"
+            android:layout_above="@id/lytPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/common_spacing_large"
+            android:layout_marginRight="@dimen/common_spacing_large"
+            android:layout_marginBottom="@dimen/common_spacing_large"
+            android:paddingBottom="@dimen/common_spacing_big"
+            android:gravity="bottom"
+            android:background="@drawable/ic_input_bg">
+
+            <ImageView
+                android:layout_width="@dimen/ui_common_icon_size"
+                android:layout_height="@dimen/ui_common_icon_size"
+                android:src="@drawable/ic_login_id"
+                android:layout_marginLeft="@dimen/common_spacing_big"
+                android:layout_marginStart="@dimen/common_spacing_big"
+                android:contentDescription="@string/common_image_description"/>
+
+            <EditText
+                android:id="@+id/txtLoginId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_spacing_big"
+                android:layout_marginStart="@dimen/common_spacing_big"
+                android:background="@null"
+                android:inputType="text"
+                android:textColor="@color/login_text"
+                android:textColorHint="@color/login_text"
+                android:textSize="@dimen/common_font_xbig"
+                android:hint="@string/txt_login_id" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/loginProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleLarge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_font_big"
+            android:text="@string/txt_loading"/>
+
+    </LinearLayout>
+
+
+
+</FrameLayout>
