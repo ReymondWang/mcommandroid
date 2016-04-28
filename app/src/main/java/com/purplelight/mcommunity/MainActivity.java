@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.purplelight.mcommunity.component.widget.TabGroup;
 import com.purplelight.mcommunity.fragment.HomeFragment;
@@ -23,6 +25,13 @@ import butterknife.InjectView;
  * Created by wangyn on 16/4/7.
  */
 public class MainActivity extends FragmentActivity {
+    private static final String TAG = "MainActivity";
+
+    // 当用户在一定时间内连续点击菜单上的返回键时，才会真正退出，防止用户的误操作。
+    private static final int EXIT_TIME_LENGTH = 2000;
+
+    // 第一次点击按下返回键的时间
+    private long firstPressBackTime = 0;
 
     @InjectView(R.id.tabGroup) TabGroup mTabGroup;
 
@@ -47,6 +56,23 @@ public class MainActivity extends FragmentActivity {
         initView();
         initEvent();
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - firstPressBackTime > EXIT_TIME_LENGTH){
+                firstPressBackTime = currentTime;
+                Toast.makeText(this, getString(R.string.press_back_noce_more), Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                firstPressBackTime = 0;
+                return super.onKeyDown(keyCode, event);
+            }
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 
     @TargetApi(19)

@@ -57,5 +57,7 @@
     <dimen name="ui_related_grid_height">200dip</dimen>
     <dimen name="ui_related_grid_title_height">50dip</dimen>
     <dimen name="ui_common_icon_size">30dip</dimen>
+    <dimen name="ui_webview_progress_height">10dip</dimen>
+    <dimen name="ui_progress_size">50dip</dimen>
 
 </resources>

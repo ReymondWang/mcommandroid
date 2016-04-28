@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.purplelight.mcommunity.component.widget.HeadBar
+        android:id="@+id/headBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/top_status_bar_height"
+        app:leftButtonIcon="@drawable/ic_back_normal"
+        app:rightButtonIcon="@drawable/ic_clear">
+    </com.purplelight.mcommunity.component.widget.HeadBar>
+
+    <com.purplelight.mcommunity.component.view.ProgressWebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:progress_height="@dimen/ui_webview_progress_height">
+    </com.purplelight.mcommunity.component.view.ProgressWebView>
+
+</LinearLayout>

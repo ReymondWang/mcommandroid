@@ -15,6 +15,7 @@
     </com.purplelight.mcommunity.component.widget.HeadBar>
 
     <ScrollView
+        android:id="@+id/lytContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -61,5 +62,28 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/loadingProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/common_spacing_xxlarge"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="@dimen/ui_progress_size"
+            android:layout_height="@dimen/ui_progress_size"
+            style="?android:attr/progressBarStyleLarge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/common_font_middle"
+            android:text="@string/txt_loading"/>
+
+    </LinearLayout>
 
 </LinearLayout>

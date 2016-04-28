@@ -15,6 +15,8 @@ public class WebAPI {
 
     public static final String UPDATE_USER = "api/userinfo/update";
 
+    public static final String APP_FUNCTION = "api/func/show";
+
     /**
      * 取得WebAPI的全路径
      * @param method  方法参数

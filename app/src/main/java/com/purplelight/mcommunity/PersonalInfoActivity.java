@@ -8,12 +8,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.purplelight.mcommunity.application.MCommApplication;
@@ -21,7 +21,6 @@ import com.purplelight.mcommunity.component.view.CircleImageView;
 import com.purplelight.mcommunity.component.view.ImageModeDialog;
 import com.purplelight.mcommunity.component.widget.HeadBar;
 import com.purplelight.mcommunity.constant.WebAPI;
-import com.purplelight.mcommunity.fastdfs.StructBase;
 import com.purplelight.mcommunity.provider.DomainFactory;
 import com.purplelight.mcommunity.provider.dao.ILoginInfoDao;
 import com.purplelight.mcommunity.provider.entity.LoginInfo;
@@ -30,6 +29,7 @@ import com.purplelight.mcommunity.task.DownloadedDrawable;
 import com.purplelight.mcommunity.util.HttpUtil;
 import com.purplelight.mcommunity.util.ImageHelper;
 import com.purplelight.mcommunity.util.Validation;
+import com.purplelight.mcommunity.web.result.Result;
 
 import java.io.File;
 import java.io.IOException;
@@ -269,31 +269,40 @@ public class PersonalInfoActivity extends BaseActivity {
         startActivityForResult(intent, HeadImgType.CROP);
     }
 
-    private class UpdateImageTask extends AsyncTask<Bitmap, Void, String> {
+    private class UpdateImageTask extends AsyncTask<Bitmap, Void, Result> {
         @Override
-        protected String  doInBackground(Bitmap... params) {
-            String fileName = "";
-            try {
-                fileName = ImageHelper.upload(params[0]);
-                LoginInfo loginInfo = MCommApplication.getLoginInfo();
-                loginInfo.setHeadImgPath(fileName);
-                MCommApplication.setLoginInfo(loginInfo);
+        protected Result  doInBackground(Bitmap... params) {
+            Result result = new Result();
+            if (Validation.IsActivityNetWork(PersonalInfoActivity.this)){
+                try {
+                    String fileName = ImageHelper.upload(params[0]);
+                    LoginInfo loginInfo = MCommApplication.getLoginInfo();
+                    loginInfo.setHeadImgPath(fileName);
+                    MCommApplication.setLoginInfo(loginInfo);
 
-                ILoginInfoDao loginInfoDao = DomainFactory.createLoginInfo(PersonalInfoActivity.this);
-                loginInfoDao.save(loginInfo);
+                    ILoginInfoDao loginInfoDao = DomainFactory.createLoginInfo(PersonalInfoActivity.this);
+                    loginInfoDao.save(loginInfo);
 
-            } catch (Exception ex){
-                Log.e(TAG, ex.getMessage());
+                } catch (Exception ex){
+                    result.setSuccess(Result.ERROR);
+                    result.setMessage(ex.getMessage());
+                    Log.e(TAG, ex.getMessage());
+                }
+            } else {
+                result.setSuccess(Result.ERROR);
+                result.setMessage(getString(R.string.do_not_have_network));
             }
 
-            return fileName;
+            return result;
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            if (!Validation.IsNullOrEmpty(s)){
+        protected void onPostExecute(Result s) {
+            if (Result.SUCCESS.equals(s.getSuccess())){
                 UpdateUserInfoTask task = new UpdateUserInfoTask();
                 task.execute();
+            } else {
+                Toast.makeText(PersonalInfoActivity.this, s.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }

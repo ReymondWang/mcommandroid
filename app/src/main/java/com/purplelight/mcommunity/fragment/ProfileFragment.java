@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.purplelight.mcommunity.LoginActivity;
 import com.purplelight.mcommunity.PersonalInfoActivity;
@@ -23,6 +24,7 @@ import com.purplelight.mcommunity.provider.dao.ILoginInfoDao;
 import com.purplelight.mcommunity.provider.entity.LoginInfo;
 import com.purplelight.mcommunity.task.BitmapDownloaderTask;
 import com.purplelight.mcommunity.task.DownloadedDrawable;
+import com.purplelight.mcommunity.util.ImageHelper;
 import com.purplelight.mcommunity.util.Validation;
 import com.purplelight.mcommunity.component.view.ConfirmDialog;
 
@@ -102,6 +104,12 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        lytBuffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showClearBufferDialog();
+            }
+        });
     }
 
     private void showLogoutDialog(){
@@ -117,6 +125,26 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
+            }
+        });
+        dialog.setCancelListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void showClearBufferDialog(){
+        final ConfirmDialog dialog = new ConfirmDialog(getActivity());
+        dialog.setTitle(getString(R.string.title_clear_buffer_confirm));
+        dialog.setConfirmListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                ImageHelper.clear();
+                Toast.makeText(getActivity(), getString(R.string.clear_buffer_success), Toast.LENGTH_SHORT).show();
             }
         });
         dialog.setCancelListener(new View.OnClickListener() {

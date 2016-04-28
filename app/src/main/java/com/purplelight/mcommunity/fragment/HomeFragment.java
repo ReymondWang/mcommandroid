@@ -1,9 +1,10 @@
 package com.purplelight.mcommunity.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -14,14 +15,24 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.purplelight.mcommunity.R;
+import com.purplelight.mcommunity.WebViewActivity;
 import com.purplelight.mcommunity.component.view.HomeFuncRowView;
 import com.purplelight.mcommunity.component.view.WebBannerView;
 import com.purplelight.mcommunity.component.widget.AutoScrollViewPager;
 import com.purplelight.mcommunity.component.widget.CirclePageIndicator;
+import com.purplelight.mcommunity.constant.Configuration;
+import com.purplelight.mcommunity.constant.WebAPI;
 import com.purplelight.mcommunity.entity.WebBanner;
+import com.purplelight.mcommunity.util.HttpUtil;
+import com.purplelight.mcommunity.util.Validation;
+import com.purplelight.mcommunity.web.parameter.AppFuncParameter;
+import com.purplelight.mcommunity.web.result.AppFunctionResult;
+import com.purplelight.mcommunity.web.result.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +55,8 @@ public class HomeFragment extends Fragment {
     @InjectView(R.id.homeTopIndicator) CirclePageIndicator homeTopIndicator;
     @InjectView(R.id.lytFuncContent) LinearLayout lytFuncContent;
     @InjectView(R.id.lytNoticeContent) GridLayout lytNoticeContent;
-
+    @InjectView(R.id.lytContent) ScrollView lytContent;
+    @InjectView(R.id.loadingProgress) LinearLayout loadingProgress;
 
 
     private List<WebBannerView> mBannerViews;
@@ -73,83 +85,50 @@ public class HomeFragment extends Fragment {
         vpHomeTop.setLayoutParams(params);
         vpHomeTop.setCycle(true);
 
-        loadingDataHandler.post(loadingDataRunnable);
+        AppFuncParameter parameter = new AppFuncParameter();
+        parameter.setFragment(Configuration.Fragment.HOME);
+
+        LoadingDataTask task = new LoadingDataTask();
+        task.execute(new Gson().toJson(parameter));
+        showProgress(true);
 
         return rootView;
     }
 
-    private final Handler loadingDataHandler = new Handler();
-    private final Runnable loadingDataRunnable = new Runnable() {
+    private class LoadingDataTask extends AsyncTask<String, Void, AppFunctionResult>{
         @Override
-        public void run() {
-            test();
-            paintingViewHandle.post(paintingViewRunnable);
+        protected AppFunctionResult doInBackground(String... params) {
+            AppFunctionResult result = new AppFunctionResult();
+            if (Validation.IsActivityNetWork(getActivity())){
+                String reqJson = params[0];
+                try{
+                    String resJson = HttpUtil.PostJosn(WebAPI.getWebAPI(WebAPI.APP_FUNCTION), reqJson);
+                    result = new Gson().fromJson(resJson, AppFunctionResult.class);
+                } catch (Exception ex){
+                    result.setSuccess(Result.ERROR);
+                    result.setMessage(ex.getMessage());
+                }
+            } else {
+                result.setSuccess(Result.ERROR);
+                result.setMessage(getString(R.string.do_not_have_network));
+            }
+            return result;
         }
-    };
 
-    private final Handler paintingViewHandle = new Handler();
-    private final Runnable paintingViewRunnable = new Runnable() {
         @Override
-        public void run() {
-            initTopAdvView();
-            initFuncView();
-            initNoticeView();
-        }
-    };
+        protected void onPostExecute(AppFunctionResult appFunctionResult) {
+            showProgress(false);
+            if (Result.SUCCESS.equals(appFunctionResult.getSuccess())){
+                mBanners = appFunctionResult.getTopList();
+                mFunctions = appFunctionResult.getBodyList();
+                mNotices = appFunctionResult.getFootList();
 
-    /**
-     * 测试数据
-     */
-    private void test(){
-
-        String[] images = new String[]{
-                "http://picyun.90sheji.com/design/00/02/16/65/s_1024_54eee87bbe660.jpg",
-                "http://c.hiphotos.bdimg.com/album/whcrop%3D657%2C282%3Bq%3D90/sign=f7b9153773f082022dc7c77d248bc6db/e824b899a9014c0834f4d9b10a7b02087af4f4d3.jpg",
-                "http://picyun.90sheji.com/design/00/07/81/58/s_1024_552725395ecc7.jpg",
-                "http://img.ui.cn/data/file/1/9/9/136991.jpg"
-        };
-
-        mBanners = new ArrayList<>();
-        for(String img : images){
-            WebBanner banner = new WebBanner();
-            banner.setImage(img);
-            banner.setUrl("http://hanyu.iciba.com/wiki/26565.shtml");
-
-            mBanners.add(banner);
-        }
-
-        String[] funcImgs = new String[]{
-                "http://www.yooyoo360.com/photo/2009-1-1/20090112114253792.jpg",
-                "http://www.yooyoo360.com/photo/2009-1-1/20090112112311190.jpg",
-                "http://www.iconpng.com/png/beautiful_flat_one/power.png",
-                "http://www.yooyoo360.com/photo/2009-1-1/20090112111251531.jpg"
-        };
-        String[] funcLbls = new String[]{"图标一", "图标二", "图标三", "图标四"};
-
-        mFunctions = new ArrayList<>();
-        for (int i = 0; i < 4; i++){
-            WebBanner banner = new WebBanner();
-            banner.setImage(funcImgs[i]);
-            banner.setLabel(funcLbls[i]);
-
-            mFunctions.add(banner);
-        }
-
-        String[] noticeImgs = new String[]{
-                "http://pic54.nipic.com/file/20141128/17062090_115021324621_2.jpg",
-                "http://a2.att.hudong.com/50/64/21300541930997136453649062547.jpg",
-                "http://zb1.img.680.com/Task/2012-3/1/2186424_20123173445.jpg",
-                "http://m2.quanjing.com/2m/wavebreak009/wavebreak173954.jpg",
-                "http://e.hiphotos.baidu.com/zhidao/pic/item/0823dd54564e9258c5d33c2b9d82d158cdbf4e0b.jpg",
-                "http://e.hiphotos.baidu.com/zhidao/pic/item/4034970a304e251f31adc265a786c9177e3e53d0.jpg"
-        };
-
-        mNotices = new ArrayList<>();
-        for(String img : noticeImgs){
-            WebBanner banner = new WebBanner();
-            banner.setImage(img);
-
-            mNotices.add(banner);
+                initTopAdvView();
+                initFuncView();
+                initNoticeView();
+            } else {
+                Toast.makeText(getActivity(), appFunctionResult.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -158,9 +137,19 @@ public class HomeFragment extends Fragment {
      */
     private void initTopAdvView(){
         mBannerViews = new ArrayList<>();
-        for(WebBanner item : AutoScrollViewPager.GetCircleModePagerSource(mBanners)){
+        for(final WebBanner item : AutoScrollViewPager.GetCircleModePagerSource(mBanners)){
             WebBannerView bannerView = new WebBannerView(getContext());
             bannerView.setBanner(item);
+            bannerView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                    intent.putExtra("title", item.getLabel());
+                    intent.putExtra("url", item.getUrl());
+                    startActivity(intent);
+                }
+            });
+
             mBannerViews.add(bannerView);
         }
 
@@ -287,6 +276,16 @@ public class HomeFragment extends Fragment {
             bannerView.setBanner(mNotices.get(i));
 
             lytNoticeContent.addView(bannerView);
+        }
+    }
+
+    private void showProgress(boolean show){
+        if (show){
+            lytContent.setVisibility(View.GONE);
+            loadingProgress.setVisibility(View.VISIBLE);
+        } else {
+            lytContent.setVisibility(View.VISIBLE);
+            loadingProgress.setVisibility(View.GONE);
         }
     }
 

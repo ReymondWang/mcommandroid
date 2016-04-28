@@ -20,6 +20,7 @@ import com.purplelight.mcommunity.provider.dao.ILoginInfoDao;
 import com.purplelight.mcommunity.provider.entity.LoginInfo;
 import com.purplelight.mcommunity.util.HttpUtil;
 import com.purplelight.mcommunity.util.Validation;
+import com.purplelight.mcommunity.web.parameter.UpdateUserInfoParameter;
 import com.purplelight.mcommunity.web.result.Result;
 
 import java.io.IOException;
@@ -109,7 +110,9 @@ public class ModifyUserInfoActivity extends BaseActivity {
                 if (checkInput()){
                     showProgress(true);
                     UpdateTask task = new UpdateTask();
-                    task.execute(gson.toJson(user));
+                    UpdateUserInfoParameter parameter = new UpdateUserInfoParameter();
+                    parameter.setUser(user);
+                    task.execute(gson.toJson(parameter));
                 }
             }
         });
@@ -120,14 +123,20 @@ public class ModifyUserInfoActivity extends BaseActivity {
         protected Result doInBackground(String... params) {
             String updateJson = params[0];
             Result result = new Result();
-            try{
-                String resultJson = HttpUtil.PostJosn(WebAPI.getWebAPI(WebAPI.UPDATE_USER), updateJson);
-                result = gson.fromJson(resultJson, Result.class);
-            } catch (IOException ex){
-                Log.e(TAG, ex.getMessage());
+            if (Validation.IsActivityNetWork(ModifyUserInfoActivity.this)){
+                try{
+                    String resultJson = HttpUtil.PostJosn(WebAPI.getWebAPI(WebAPI.UPDATE_USER), updateJson);
+                    result = gson.fromJson(resultJson, Result.class);
+                } catch (IOException ex){
+                    Log.e(TAG, ex.getMessage());
+                    result.setSuccess(Result.ERROR);
+                    result.setMessage(ex.getMessage());
+                }
+            } else {
                 result.setSuccess(Result.ERROR);
-                result.setMessage(ex.getMessage());
+                result.setMessage(getString(R.string.do_not_have_network));
             }
+
             return result;
         }
 

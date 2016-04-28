@@ -50,8 +50,10 @@
     <string name="txt_male">男</string>
     <string name="txt_female">女</string>
 
-    <!-- 退出确认 -->
+    <!-- 确认 -->
     <string name="title_logout_confirm">您是否确认退出？</string>
+    <string name="title_clear_buffer_confirm">您是否确认清空缓存？</string>
+    <string name="clear_buffer_success">清除缓存成功</string>
 
     <!-- 确认对话框 -->
     <string name="switch_on">是</string>
@@ -74,4 +76,5 @@
     <string name="user_name_must_input">请输入用户名</string>
     <string name="user_email_must_input">请输入邮箱</string>
     <string name="user_phone_must_input">请输入电话</string>
+    <string name="press_back_noce_more">再次按下返回键退出</string>
 </resources>

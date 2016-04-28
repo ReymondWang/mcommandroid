@@ -7,7 +7,7 @@ package com.purplelight.mcommunity.constant;
 public class Configuration {
 
     public class Server{
-        public static final String WEB = "http://192.168.0.100:8080/mcm/";
+        public static final String WEB = "http://192.168.1.80:8080/mcm/";
 
         public static final String IMAGE = "http://192.168.0.107:8080/";
     }
@@ -20,6 +20,12 @@ public class Configuration {
         public static final boolean ANTI_STEAL_TOKEN = false;
         public static final String SECRET_KEY = "FastDFS1234567890";
         public static final String TRACKER_SERVER = "192.168.0.107:22122";
+    }
+
+    public class Fragment{
+        public static final String HOME = "1";
+        public static final String WORK = "2";
+        public static final String PROFILE = "3";
     }
 
 }
