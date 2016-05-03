@@ -29,11 +29,11 @@ public class TabGroup extends LinearLayout {
     private int[] imageRes;
     private int[] imageResActive;
     {
-        imageRes = new int[] {R.drawable.ic_community_normal
+        imageRes = new int[] {R.drawable.ic_home_normal
                 , R.drawable.ic_work_normal
                 , R.drawable.ic_profile_normal};
 
-        imageResActive = new int[] {R.drawable.ic_community_select
+        imageResActive = new int[] {R.drawable.ic_home_select
                 , R.drawable.ic_work_select
                 , R.drawable.ic_profile_select};
     }

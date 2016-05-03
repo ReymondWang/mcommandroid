@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.purplelight.mcommunity.R;
+import com.purplelight.mcommunity.constant.WebAPI;
 import com.purplelight.mcommunity.entity.WebBanner;
 import com.purplelight.mcommunity.task.BitmapDownloaderTask;
 import com.purplelight.mcommunity.task.DownloadedDrawable;
@@ -120,7 +121,7 @@ public class WebBannerView extends LinearLayout implements View.OnClickListener 
                 BitmapDownloaderTask task = new BitmapDownloaderTask(imgBanner);
                 DownloadedDrawable drawable = new DownloadedDrawable(task, getResources());
                 imgBanner.setImageDrawable(drawable);
-                task.execute(mBanner.getImage());
+                task.execute(WebAPI.getFullImagePath(mBanner.getImage()));
             }
 
             if (!Validation.IsNullOrEmpty(mBanner.getLabel())){

@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/top_status_bar_height"
-        app:centerImage="@drawable/ic_ccp_logo"
         app:centerTitle="@string/title_community_name">
     </com.purplelight.mcommunity.component.widget.HeadBar>
 
